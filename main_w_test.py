@@ -47,13 +47,13 @@ parser.add_argument('--printfreq', default=10, type=int,
                     help='print frequency (default: 10)')
 parser.add_argument('--workers', default=4, type=int,
                     help='number of data loading workers (default: 4)')
-parser.add_argument('--epochs', default=100, type=int,
+parser.add_argument('--epochs', default=200, type=int,
                     help='number of total epochs to run')
-parser.add_argument('-b', '--batchsize', default=128, type=int,
+parser.add_argument('-b', '--batchsize', default=256, type=int,
                     help='mini-batch size (default: 256), this is the total')
-parser.add_argument('--optimizer', default="sgd", type=str,
+parser.add_argument('--optimizer', default="lars", type=str,
                     help='optimizer')
-parser.add_argument('--scheduler', default="cosine", type=str,
+parser.add_argument('--scheduler', default="onecycle", type=str,
                     help='lr scheduler')
 parser.add_argument('--lr', default=0.1, type=float,
                     help='initial learning rate', dest='lr')
@@ -130,7 +130,7 @@ def main():
     total_iter = 0
     history = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": [],"test_loss": [], "test_acc": [], "iter": [0,] }
     start_time = time.time()
-    
+    total_time = 0
     if args.dataset == "cifar100N":
         val_set = Subset(tr_set_clean, order_val)
     else:
@@ -195,6 +195,7 @@ def main():
                                                            batch_size=args.batchsize,\
                                                            shuffle=True, num_workers=args.workers, pin_memory=True)
             # start your record
+            total_time += time.time()-start_time
             if step > 50: 
                 tr_loss, tr_acc1 = tracker.losses.avg, tracker.top1.avg 
                 val_loss, val_acc1 = validate(val_loader, model, criterion) 
@@ -210,9 +211,9 @@ def main():
                 torch.save(history,"stat.pt")  
                 # reinitialization<=================
                 model.train()
+            start_time = time.time()
 
-    end_time = time.time()
-    print('total_time:'+str(end_time-start_time))
+    print('total_time:'+str(total_time))
         
 def train(train_loader, model, criterion, optimizer,scheduler, epoch, iterations):
   # switch to train mode

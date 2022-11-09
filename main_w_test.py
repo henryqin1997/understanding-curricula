@@ -210,7 +210,9 @@ def main():
                 torch.save(history,"stat.pt")  
                 # reinitialization<=================
                 model.train()
-                
+
+    end_time = time.time()
+    print('total_time:'+str(end_time-start_time))
         
 def train(train_loader, model, criterion, optimizer,scheduler, epoch, iterations):
   # switch to train mode

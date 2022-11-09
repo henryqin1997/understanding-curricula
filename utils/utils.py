@@ -29,7 +29,7 @@ sys.path.append("..")
 from third_party import models
 import numpy as np
 import torch.nn as nn
-
+from lars import Lars
 
 def run_cmd(cmd_str, prev_sp=None):
   """
@@ -68,6 +68,8 @@ def get_optimizer(optimizer_name, parameters, lr, momentum=0, weight_decay=0):
     return optim.Adagrad(parameters, lr=lr, weight_decay=weight_decay)
   elif optimizer_name == 'adam':
     return optim.Adam(parameters, lr=lr, weight_decay=weight_decay)
+  elif optimizer_name == 'lars':
+    return Lars(parameters, lr=lr, momentum=momentum, weight_decay=weight_decay)
 
 def get_scheduler(scheduler_name, optimizer, num_epochs, **kwargs):
   if scheduler_name == 'constant':
@@ -83,7 +85,8 @@ def get_scheduler(scheduler_name, optimizer, num_epochs, **kwargs):
     return lr_scheduler.CosineAnnealingLR(optimizer, num_epochs, **kwargs)
   elif scheduler_name == 'step-more':
     return lr_scheduler.MultiStepLR(optimizer, milestones=[60, 120, 160], gamma=0.2, **kwargs)
-
+  elif scheduler_name == 'onecycle':
+    return lr_scheduler.OneCycleLR(optimizer, max_lr=5.2,steps_per_epoch=196, epochs=200)
 
 def run_cmd(cmd_str, prev_sp=None):
   """

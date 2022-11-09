@@ -40,7 +40,7 @@ parser.add_argument('--data-dir', default='dataset',
 parser.add_argument('--order-dir', default='cifar10-cscores-orig-order.npz',
                     help='path to train val idx')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
-                    help='model architecture: (default: resnet18)')
+                    help='model architecture: (default: resnet50)')
 parser.add_argument('--dataset', default='cifar10', type=str,
                     help='dataset')
 parser.add_argument('--printfreq', default=10, type=int,

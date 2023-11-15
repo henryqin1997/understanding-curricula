@@ -119,8 +119,9 @@ def main():
     #check the statistics 
     bs = args.batchsize
     N = len(order)
+    print('N':N)
     myiterations = (N//bs+1)*args.epochs
-    
+    print(myiterations)
     #initial training
     model = get_model(args.arch, tr_set.nchannels, tr_set.imsize, len(tr_set.classes), args.half)
     optimizer = get_optimizer(args.optimizer, model.parameters(), args.lr, args.momentum, args.wd)

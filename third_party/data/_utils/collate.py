@@ -10,7 +10,7 @@ import re
 # from torch._six import container_abcs, string_classes, int_classes
 import collections.abc as container_abcs
 int_classes = int
-string_classes = string
+string_classes = str
 
 np_str_obj_array_pattern = re.compile(r'[SaUO]')
 

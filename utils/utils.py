@@ -86,7 +86,7 @@ def get_scheduler(scheduler_name, optimizer, num_epochs, **kwargs):
   elif scheduler_name == 'step-more':
     return lr_scheduler.MultiStepLR(optimizer, milestones=[60, 120, 160], gamma=0.2, **kwargs)
   elif scheduler_name == 'onecycle':
-    return lr_scheduler.OneCycleLR(optimizer, max_lr=5.2,steps_per_epoch=196, epochs=200)
+    return lr_scheduler.OneCycleLR(optimizer, max_lr=5.2,steps_per_epoch=196, epochs=num_epochs)
 
 def run_cmd(cmd_str, prev_sp=None):
   """

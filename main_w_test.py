@@ -119,7 +119,7 @@ def main():
     #check the statistics 
     bs = args.batchsize
     N = len(order)
-    print('N':N)
+    print('N:', N)
     myiterations = (N//bs+1)*args.epochs
     print(myiterations)
     #initial training

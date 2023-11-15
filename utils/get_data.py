@@ -54,7 +54,8 @@ def get_transform(split, normalize=None, transform=None, imsize=None, aug='large
         if aug == 'large':
           normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         else:
-          normalize = transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])  
+#           normalize = transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])
+            normalize = transforms.Normalize(mean=[0.5074,0.4867,0.4411],std=[0.2011,0.1987,0.2025])
     transform = transforms.Compose(get_aug(split, imsize=imsize, aug=aug)
                                    + [transforms.ToTensor(), normalize])
   return transform
